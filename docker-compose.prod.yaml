@@ -1,0 +1,30 @@
+version: '1.0'
+services:
+  nextjsfrontend:
+    ports:
+      - "3000:3000"
+    restart: always
+
+    environment:
+      - DATABASE_URL=mongodb://mongo1:27017,mongo2:27018,mongo3:27019/blog?replicaSet=rs0&authSource=admin&retryWrites=true&w=majority
+      - AUTH_SECRET="secret"
+      - GITHUB_CLIENT_ID=972b6237e338168f703b
+      - GITHUB_CLIENT_SECRET=62dba5035121277a8e36c4c85c23a69c834f65dc
+      - GOOGLE_CLIENT_ID=466053697775-vptv0hrdao69k6503ot2npqq4u6f40sd.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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 
+      - RESEND_API_KEY=re_ZhRegd92_L8QmQt6zDZmSbvf1nbdM2ZfT
+      - NEXT_PUBLIC_APP_URL ="http://localhost:3000"
+      - AUTH_URL=http://127.0.0.1:3000/api/auth
+
+    build: 
+      context: .
+      target: prod
+    networks:
+      - mongodbnetwork
+ 
+networks: 
+  mongodbnetwork: 
+    external: true 
+    name: mongodbnetworklink
+
+
